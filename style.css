@@ -204,7 +204,11 @@ body{font-family:'Nunito Sans',system-ui,sans-serif;background:var(--paper);colo
 .save-status.saved{display:block;background:var(--green-bg);color:var(--green);}
 .save-status.error{display:block;background:var(--red-bg);color:var(--red);}
 
-.foot{text-align:center;color:#9a9080;font-size:12px;padding:28px;}
+.foot{
+    text-align:center;font-size:12px;padding:28px;font-weight:800;letter-spacing:.4px;
+    color:var(--gold);
+    animation:goldBlink 1.4s ease-in-out infinite;
+}
 
 @media(max-width:600px){
     .topbar{padding:10px 14px;gap:12px;}
