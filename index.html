@@ -6,187 +6,338 @@
 <title>Vocabulary Quiz · Units 4 & 6</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,900&family=Nunito+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<header class="masthead">
-    <div class="mast-inner">
-        <p class="eyebrow">University of Costa Rica · Orall Comunication V</p>
-        <h1>Vocabulary Quiz</h1>
-        <p class="subtitle">Units 4 &amp; 6 — <em>Ancient Wisdom</em> &amp; <em>Together Alone</em></p>
+<!-- ======== ANTI-CHEAT OVERLAY ======== -->
+<div id="blurOverlay" class="blur-overlay" hidden>
+    <div class="blur-card">
+        <div class="warning-icon">⚠️</div>
+        <h2>Return to the quiz!</h2>
+        <p>You left this page. <strong>This incident has been recorded.</strong><br>
+        Click the button below to continue. Do not leave again.</p>
+        <button id="returnBtn" class="return-btn">Return to quiz →</button>
+    </div>
+</div>
+
+<!-- ======== START GATE ======== -->
+<section id="startGate" class="gate">
+    <div class="gate-card">
+        <p class="gate-eyebrow">University of Costa Rica · Oral Communication V</p>
+        <h1 class="gate-title">Vocabulary Quiz</h1>
+        <p class="gate-subtitle">Units 4 &amp; 6 — <em>Ancient Wisdom</em> &amp; <em>Together Alone</em></p>
+        <div class="gate-meta">
+            <span>👨‍🏫 Prof. Roberto Mesén Hidalgo</span>
+            <span>📊 20 points</span>
+            <span>⏱ One lesson</span>
+        </div>
+        <div class="gate-rules">
+            <p><strong>Before you begin, read carefully:</strong></p>
+            <ul>
+                <li>🔒 Once you start, <strong>do not switch tabs or leave</strong> — your session will be flagged.</li>
+                <li>✍️ Some questions require you to <strong>type the exact word</strong> — spelling matters.</li>
+                <li>🚫 The page <strong>cannot be reloaded</strong> after submission.</li>
+                <li>📤 Results are sent directly to your professor.</li>
+            </ul>
+        </div>
+        <label class="gate-label" for="studentName">Your full name *</label>
+        <input type="text" id="studentName" class="gate-input" placeholder="e.g. María Fernández Vargas" autocomplete="off">
+        <button id="startBtn" class="start-btn">I understand — Start quiz →</button>
+        <p class="gate-note">By clicking Start you agree not to use dictionaries, translators or AI tools.</p>
+    </div>
+</section>
+
+<!-- ======== QUIZ BODY ======== -->
+<div id="quizBody" hidden>
+
+<header class="topbar">
+    <div class="topbar-left">
+        <span class="logo">📘 Vocabulary Quiz</span>
+    </div>
+    <div class="topbar-right">
+        <div class="timer-wrap">
+            <span class="timer-label">Time</span>
+            <span id="timer" class="timer">00:00</span>
+        </div>
+        <div class="prog-wrap">
+            <div class="prog-bar"><span id="progFill"></span></div>
+            <span id="progText" class="prog-text">0/20</span>
+        </div>
     </div>
 </header>
 
-<div class="progress-rail">
-    <div class="progress-fill" id="progressFill"></div>
-    <span class="progress-label" id="progressLabel">0 / 18 answered</span>
+<!-- warning strip -->
+<div id="warnStrip" class="warn-strip" hidden>
+    ⚠️ Warning: You left the quiz tab. This has been noted. <strong id="warnCount"></strong>
 </div>
 
 <main class="sheet">
 
-    <!-- intro / name -->
-    <section class="intro-block">
-        <p class="meta"><strong>Professor:</strong> Roberto Mesén Hidalgo &nbsp;·&nbsp; <strong>Total:</strong> 18 points &nbsp;·&nbsp; <strong>Time:</strong> one lesson</p>
-        <p class="rules">This quiz really tests if you studied. Some answers you must <strong>type</strong> — spelling counts. Read carefully. You can submit only once.</p>
-        <label class="name-field" for="studentName">Student's full name *</label>
-        <input type="text" id="studentName" placeholder="Write your full name" autocomplete="off">
-    </section>
-
     <form id="quizForm" autocomplete="off">
 
-        <!-- SECTION A -->
-        <h2 class="sec"><span>A</span> Word forms — type the correct form</h2>
+    <!-- ===== SECTION A — TYPE THE WORD ===== -->
+    <div class="sec-header">
+        <span class="sec-letter">A</span>
+        <div>
+            <h2>Fill in the blank</h2>
+            <p>Type the exact vocabulary word. Spelling counts. No hints this time.</p>
+        </div>
+    </div>
+
+    <div class="q-grid">
 
         <article class="q" data-q="1">
-            <p class="stem"><span class="num">1.</span> There was an <input class="blank" name="q1" placeholder="________"> of natural light in the home. <span class="cue">(noun of “abound”)</span></p>
+            <span class="q-num">01</span>
+            <div class="q-body">
+                <p class="stem">The company's success was due to the <span class="blank-wrap"><input class="blank" name="q1" autocomplete="off" spellcheck="false" placeholder="?"></span> of talented employees they had hired over the years.</p>
+            </div>
         </article>
+
         <article class="q" data-q="2">
-            <p class="stem"><span class="num">2.</span> The doors and windows do not <input class="blank" name="q2" placeholder="________"> properly. <span class="cue">(verb: to put in a straight line)</span></p>
+            <span class="q-num">02</span>
+            <div class="q-body">
+                <p class="stem">A feng shui master was called in to <span class="blank-wrap"><input class="blank" name="q2" autocomplete="off" spellcheck="false" placeholder="?"></span> the furniture with the natural energy flow of the building.</p>
+            </div>
         </article>
+
         <article class="q" data-q="3">
-            <p class="stem"><span class="num">3.</span> Many businessmen remained <input class="blank" name="q3" placeholder="________"> about feng shui. <span class="cue">(adjective: full of doubt)</span></p>
+            <span class="q-num">03</span>
+            <div class="q-body">
+                <p class="stem">Despite the evidence, the scientist remained <span class="blank-wrap"><input class="blank" name="q3" autocomplete="off" spellcheck="false" placeholder="?"></span> about the ancient practice's effectiveness.</p>
+            </div>
         </article>
+
         <article class="q" data-q="4">
-            <p class="stem"><span class="num">4.</span> Good lighting can <input class="blank" name="q4" placeholder="________"> the energy of a room. <span class="cue">(verb: to improve)</span></p>
+            <span class="q-num">04</span>
+            <div class="q-body">
+                <p class="stem">Architects use natural light and color strategically to <span class="blank-wrap"><input class="blank" name="q4" autocomplete="off" spellcheck="false" placeholder="?"></span> the feeling of space inside a building.</p>
+            </div>
         </article>
+
         <article class="q" data-q="5">
-            <p class="stem"><span class="num">5.</span> A balanced home gives you more <input class="blank" name="q5" placeholder="________"> and energy. <span class="cue">(noun of “vital”)</span></p>
+            <span class="q-num">05</span>
+            <div class="q-body">
+                <p class="stem">Feeling isolated from friends while being constantly online is a form of digital <span class="blank-wrap"><input class="blank" name="q5" autocomplete="off" spellcheck="false" placeholder="?"></span>.</p>
+            </div>
         </article>
+
         <article class="q" data-q="6">
-            <p class="stem"><span class="num">6.</span> She felt completely <input class="blank" name="q6" placeholder="________"> by hundreds of messages. <span class="cue">(adjective from “overwhelm”)</span></p>
-        </article>
-
-        <!-- SECTION B -->
-        <h2 class="sec"><span>B</span> Opposites — choose the best opposite</h2>
-
-        <article class="q mc" data-q="7">
-            <p class="stem"><span class="num">7.</span> Opposite of <strong>transparent</strong>:</p>
-            <div class="opts">
-                <label class="opt"><input type="radio" name="q7" value="a"><span>A) honest</span></label>
-                <label class="opt"><input type="radio" name="q7" value="b"><span>B) hidden</span></label>
-                <label class="opt"><input type="radio" name="q7" value="c"><span>C) clear</span></label>
-                <label class="opt"><input type="radio" name="q7" value="d"><span>D) open</span></label>
-            </div>
-        </article>
-        <article class="q mc" data-q="8">
-            <p class="stem"><span class="num">8.</span> Opposite of <strong>solitude</strong>:</p>
-            <div class="opts">
-                <label class="opt"><input type="radio" name="q8" value="a"><span>A) companionship</span></label>
-                <label class="opt"><input type="radio" name="q8" value="b"><span>B) silence</span></label>
-                <label class="opt"><input type="radio" name="q8" value="c"><span>C) peace</span></label>
-                <label class="opt"><input type="radio" name="q8" value="d"><span>D) loneliness</span></label>
-            </div>
-        </article>
-        <article class="q mc" data-q="9">
-            <p class="stem"><span class="num">9.</span> Opposite of <strong>superficial</strong>:</p>
-            <div class="opts">
-                <label class="opt"><input type="radio" name="q9" value="a"><span>A) shallow</span></label>
-                <label class="opt"><input type="radio" name="q9" value="b"><span>B) empty</span></label>
-                <label class="opt"><input type="radio" name="q9" value="c"><span>C) authentic</span></label>
-                <label class="opt"><input type="radio" name="q9" value="d"><span>D) fake</span></label>
-            </div>
-        </article>
-        <article class="q mc" data-q="10">
-            <p class="stem"><span class="num">10.</span> Opposite of <strong>anonymity</strong>:</p>
-            <div class="opts">
-                <label class="opt"><input type="radio" name="q10" value="a"><span>A) privacy</span></label>
-                <label class="opt"><input type="radio" name="q10" value="b"><span>B) fame</span></label>
-                <label class="opt"><input type="radio" name="q10" value="c"><span>C) mystery</span></label>
-                <label class="opt"><input type="radio" name="q10" value="d"><span>D) silence</span></label>
+            <span class="q-num">06</span>
+            <div class="q-body">
+                <p class="stem">She was completely <span class="blank-wrap"><input class="blank" name="q6" autocomplete="off" spellcheck="false" placeholder="?"></span> by the number of notifications she received every hour.</p>
             </div>
         </article>
 
-        <!-- SECTION C -->
-        <h2 class="sec"><span>C</span> Complete the sentence — choose the correct expression</h2>
-
-        <article class="q mc" data-q="11">
-            <p class="stem"><span class="num">11.</span> He won't ____ in business without consulting his feng shui master.</p>
-            <div class="opts">
-                <label class="opt"><input type="radio" name="q11" value="a"><span>A) keep out</span></label>
-                <label class="opt"><input type="radio" name="q11" value="b"><span>B) make a move</span></label>
-                <label class="opt"><input type="radio" name="q11" value="c"><span>C) frown upon</span></label>
-                <label class="opt"><input type="radio" name="q11" value="d"><span>D) work around</span></label>
-            </div>
-        </article>
-        <article class="q mc" data-q="12">
-            <p class="stem"><span class="num">12.</span> The product launch failed completely. It was a total ____.</p>
-            <div class="opts">
-                <label class="opt"><input type="radio" name="q12" value="a"><span>A) persona</span></label>
-                <label class="opt"><input type="radio" name="q12" value="b"><span>B) velocity</span></label>
-                <label class="opt"><input type="radio" name="q12" value="c"><span>C) debacle</span></label>
-                <label class="opt"><input type="radio" name="q12" value="d"><span>D) solitude</span></label>
-            </div>
-        </article>
-        <article class="q mc" data-q="13">
-            <p class="stem"><span class="num">13.</span> My friends told me to ____ and stop panicking over one text.</p>
-            <div class="opts">
-                <label class="opt"><input type="radio" name="q13" value="a"><span>A) tuck away</span></label>
-                <label class="opt"><input type="radio" name="q13" value="b"><span>B) get a grip</span></label>
-                <label class="opt"><input type="radio" name="q13" value="c"><span>C) catch off guard</span></label>
-                <label class="opt"><input type="radio" name="q13" value="d"><span>D) talk into</span></label>
-            </div>
-        </article>
-        <article class="q mc" data-q="14">
-            <p class="stem"><span class="num">14.</span> I met my partner online, so I'm a real ____ of online dating.</p>
-            <div class="opts">
-                <label class="opt"><input type="radio" name="q14" value="a"><span>A) impersonator</span></label>
-                <label class="opt"><input type="radio" name="q14" value="b"><span>B) advocate</span></label>
-                <label class="opt"><input type="radio" name="q14" value="c"><span>C) critic</span></label>
-                <label class="opt"><input type="radio" name="q14" value="d"><span>D) skeptic</span></label>
-            </div>
-        </article>
-        <article class="q mc" data-q="15">
-            <p class="stem"><span class="num">15.</span> In Hong Kong, feng shui is ____ — almost everyone uses it.</p>
-            <div class="opts">
-                <label class="opt"><input type="radio" name="q15" value="a"><span>A) digressive</span></label>
-                <label class="opt"><input type="radio" name="q15" value="b"><span>B) hard-bitten</span></label>
-                <label class="opt"><input type="radio" name="q15" value="c"><span>C) huge</span></label>
-                <label class="opt"><input type="radio" name="q15" value="d"><span>D) superficial</span></label>
+        <article class="q" data-q="7">
+            <span class="q-num">07</span>
+            <div class="q-body">
+                <p class="stem">The user created a confident and charming online <span class="blank-wrap"><input class="blank" name="q7" autocomplete="off" spellcheck="false" placeholder="?"></span> that was very different from his real personality.</p>
             </div>
         </article>
 
-        <!-- SECTION D -->
-        <h2 class="sec"><span>D</span> Meaning — choose the correct definition</h2>
-
-        <article class="q mc" data-q="16">
-            <p class="stem"><span class="num">16.</span> <strong>velocity</strong> means…</p>
-            <div class="opts">
-                <label class="opt"><input type="radio" name="q16" value="a"><span>A) distance</span></label>
-                <label class="opt"><input type="radio" name="q16" value="b"><span>B) speed</span></label>
-                <label class="opt"><input type="radio" name="q16" value="c"><span>C) weight</span></label>
-                <label class="opt"><input type="radio" name="q16" value="d"><span>D) silence</span></label>
-            </div>
-        </article>
-        <article class="q mc" data-q="17">
-            <p class="stem"><span class="num">17.</span> A <strong>narcissistic</strong> person is…</p>
-            <div class="opts">
-                <label class="opt"><input type="radio" name="q17" value="a"><span>A) excessively self-centered</span></label>
-                <label class="opt"><input type="radio" name="q17" value="b"><span>B) very generous</span></label>
-                <label class="opt"><input type="radio" name="q17" value="c"><span>C) extremely shy</span></label>
-                <label class="opt"><input type="radio" name="q17" value="d"><span>D) always honest</span></label>
-            </div>
-        </article>
-        <article class="q mc" data-q="18">
-            <p class="stem"><span class="num">18.</span> An <strong>anecdote</strong> is…</p>
-            <div class="opts">
-                <label class="opt"><input type="radio" name="q18" value="a"><span>A) a serious warning</span></label>
-                <label class="opt"><input type="radio" name="q18" value="b"><span>B) a short personal story</span></label>
-                <label class="opt"><input type="radio" name="q18" value="c"><span>C) a type of medicine</span></label>
-                <label class="opt"><input type="radio" name="q18" value="d"><span>D) a business contract</span></label>
+        <article class="q" data-q="8">
+            <span class="q-num">08</span>
+            <div class="q-body">
+                <p class="stem">The <span class="blank-wrap"><input class="blank" name="q8" autocomplete="off" spellcheck="false" placeholder="?"></span> of social media trends makes it almost impossible to keep up.</p>
             </div>
         </article>
 
-        <div class="submit-row">
-            <button type="submit" class="submit">Submit quiz</button>
+    </div>
+
+    <!-- ===== SECTION B — CHOOSE THE CORRECT DEFINITION ===== -->
+    <div class="sec-header">
+        <span class="sec-letter">B</span>
+        <div>
+            <h2>What does it mean?</h2>
+            <p>Choose the definition that best matches the word as used in the units.</p>
         </div>
-        <div id="saveStatus" class="save-status"></div>
+    </div>
+
+    <article class="q mc" data-q="9">
+        <div class="q-num-mc">09</div>
+        <div class="q-body-mc">
+            <p class="stem-mc">The business deal was vital for the company's survival.</p>
+            <p class="stem-mc-sub">In this context, <strong>vital</strong> means…</p>
+            <div class="opts">
+                <label class="opt"><input type="radio" name="q9" value="a"><span>A) related to vitamins and health</span></label>
+                <label class="opt"><input type="radio" name="q9" value="b"><span>B) completely unnecessary</span></label>
+                <label class="opt"><input type="radio" name="q9" value="c"><span>C) absolutely essential and important</span></label>
+                <label class="opt"><input type="radio" name="q9" value="d"><span>D) dangerous and risky</span></label>
+            </div>
+        </div>
+    </article>
+
+    <article class="q mc" data-q="10">
+        <div class="q-num-mc">10</div>
+        <div class="q-body-mc">
+            <p class="stem-mc">He told an amusing anecdote about the day he met Master Sun.</p>
+            <p class="stem-mc-sub">An <strong>anecdote</strong> is…</p>
+            <div class="opts">
+                <label class="opt"><input type="radio" name="q10" value="a"><span>A) a long scientific report</span></label>
+                <label class="opt"><input type="radio" name="q10" value="b"><span>B) a short, entertaining personal story</span></label>
+                <label class="opt"><input type="radio" name="q10" value="c"><span>C) an official business document</span></label>
+                <label class="opt"><input type="radio" name="q10" value="d"><span>D) a type of ancient remedy</span></label>
+            </div>
+        </div>
+    </article>
+
+    <article class="q mc" data-q="11">
+        <div class="q-num-mc">11</div>
+        <div class="q-body-mc">
+            <p class="stem-mc">Social media allows people to connect, but it can also degrade the quality of real-world relationships.</p>
+            <p class="stem-mc-sub"><strong>Degrade</strong> means…</p>
+            <div class="opts">
+                <label class="opt"><input type="radio" name="q11" value="a"><span>A) to improve significantly</span></label>
+                <label class="opt"><input type="radio" name="q11" value="b"><span>B) to make something worse over time</span></label>
+                <label class="opt"><input type="radio" name="q11" value="c"><span>C) to translate into another language</span></label>
+                <label class="opt"><input type="radio" name="q11" value="d"><span>D) to upgrade or replace</span></label>
+            </div>
+        </div>
+    </article>
+
+    <article class="q mc" data-q="12">
+        <div class="q-num-mc">12</div>
+        <div class="q-body-mc">
+            <p class="stem-mc">She values her solitude and spends Sunday mornings alone, reading.</p>
+            <p class="stem-mc-sub"><strong>Solitude</strong> means…</p>
+            <div class="opts">
+                <label class="opt"><input type="radio" name="q12" value="a"><span>A) a feeling of deep sadness</span></label>
+                <label class="opt"><input type="radio" name="q12" value="b"><span>B) being surrounded by many friends</span></label>
+                <label class="opt"><input type="radio" name="q12" value="c"><span>C) the peaceful state of being alone</span></label>
+                <label class="opt"><input type="radio" name="q12" value="d"><span>D) an inability to communicate</span></label>
+            </div>
+        </div>
+    </article>
+
+    <!-- ===== SECTION C — CORRECT THE MISTAKE ===== -->
+    <div class="sec-header">
+        <span class="sec-letter">C</span>
+        <div>
+            <h2>Correct the mistake</h2>
+            <p>One word in bold is used <strong>incorrectly</strong>. Choose the word that should replace it.</p>
+        </div>
+    </div>
+
+    <article class="q mc" data-q="13">
+        <div class="q-num-mc">13</div>
+        <div class="q-body-mc">
+            <p class="stem-mc">Master Sun <strong>transcended</strong> the businessman into rearranging his entire office according to feng shui principles.</p>
+            <div class="opts">
+                <label class="opt"><input type="radio" name="q13" value="a"><span>A) frown upon</span></label>
+                <label class="opt"><input type="radio" name="q13" value="b"><span>B) aligned</span></label>
+                <label class="opt"><input type="radio" name="q13" value="c"><span>C) talked</span></label>
+                <label class="opt"><input type="radio" name="q13" value="d"><span>D) enhanced</span></label>
+            </div>
+        </div>
+    </article>
+
+    <article class="q mc" data-q="14">
+        <div class="q-num-mc">14</div>
+        <div class="q-body-mc">
+            <p class="stem-mc">I was completely <strong>frown upon</strong> by the number of messages I received after posting that photo.</p>
+            <div class="opts">
+                <label class="opt"><input type="radio" name="q14" value="a"><span>A) overwhelmed</span></label>
+                <label class="opt"><input type="radio" name="q14" value="b"><span>B) skeptical</span></label>
+                <label class="opt"><input type="radio" name="q14" value="c"><span>C) transparent</span></label>
+                <label class="opt"><input type="radio" name="q14" value="d"><span>D) aligned</span></label>
+            </div>
+        </div>
+    </article>
+
+    <article class="q mc" data-q="15">
+        <div class="q-num-mc">15</div>
+        <div class="q-body-mc">
+            <p class="stem-mc">Many users hide behind <strong>velocity</strong> to say things online they would never dare say in person.</p>
+            <div class="opts">
+                <label class="opt"><input type="radio" name="q15" value="a"><span>A) abundance</span></label>
+                <label class="opt"><input type="radio" name="q15" value="b"><span>B) persona</span></label>
+                <label class="opt"><input type="radio" name="q15" value="c"><span>C) solitude</span></label>
+                <label class="opt"><input type="radio" name="q15" value="d"><span>D) anonymity</span></label>
+            </div>
+        </div>
+    </article>
+
+    <!-- ===== SECTION D — TRUE / FALSE ===== -->
+    <div class="sec-header">
+        <span class="sec-letter">D</span>
+        <div>
+            <h2>True or False?</h2>
+            <p>Based on the meaning of the word, decide if the statement is TRUE or FALSE.</p>
+        </div>
+    </div>
+
+    <article class="q tf" data-q="16">
+        <div class="q-num-mc">16</div>
+        <div class="q-body-mc">
+            <p class="stem-mc">A <strong>narcissistic</strong> person is someone who thinks mainly about others and is very generous with their time.</p>
+            <div class="opts tf-opts">
+                <label class="opt tf-opt true-opt"><input type="radio" name="q16" value="true"><span>✅ TRUE</span></label>
+                <label class="opt tf-opt false-opt"><input type="radio" name="q16" value="false"><span>❌ FALSE</span></label>
+            </div>
+        </div>
+    </article>
+
+    <article class="q tf" data-q="17">
+        <div class="q-num-mc">17</div>
+        <div class="q-body-mc">
+            <p class="stem-mc">If something <strong>transcends</strong> cultural boundaries, it means it only works in one specific culture and cannot be understood by others.</p>
+            <div class="opts tf-opts">
+                <label class="opt tf-opt true-opt"><input type="radio" name="q17" value="true"><span>✅ TRUE</span></label>
+                <label class="opt tf-opt false-opt"><input type="radio" name="q17" value="false"><span>❌ FALSE</span></label>
+            </div>
+        </div>
+    </article>
+
+    <article class="q tf" data-q="18">
+        <div class="q-num-mc">18</div>
+        <div class="q-body-mc">
+            <p class="stem-mc">A <strong>superficial</strong> online relationship is one that is deep, meaningful, and based on genuine understanding.</p>
+            <div class="opts tf-opts">
+                <label class="opt tf-opt true-opt"><input type="radio" name="q18" value="true"><span>✅ TRUE</span></label>
+                <label class="opt tf-opt false-opt"><input type="radio" name="q18" value="false"><span>❌ FALSE</span></label>
+            </div>
+        </div>
+    </article>
+
+    <article class="q tf" data-q="19">
+        <div class="q-num-mc">19</div>
+        <div class="q-body-mc">
+            <p class="stem-mc">To <strong>collaborate</strong> with someone means to compete against them aggressively to win a prize or recognition.</p>
+            <div class="opts tf-opts">
+                <label class="opt tf-opt true-opt"><input type="radio" name="q19" value="true"><span>✅ TRUE</span></label>
+                <label class="opt tf-opt false-opt"><input type="radio" name="q19" value="false"><span>❌ FALSE</span></label>
+            </div>
+        </div>
+    </article>
+
+    <article class="q tf" data-q="20">
+        <div class="q-num-mc">20</div>
+        <div class="q-body-mc">
+            <p class="stem-mc">Being an <strong>advocate</strong> of something means you publicly support and defend it.</p>
+            <div class="opts tf-opts">
+                <label class="opt tf-opt true-opt"><input type="radio" name="q20" value="true"><span>✅ TRUE</span></label>
+                <label class="opt tf-opt false-opt"><input type="radio" name="q20" value="false"><span>❌ FALSE</span></label>
+            </div>
+        </div>
+    </article>
+
+    <!-- SUBMIT -->
+    <div class="submit-row">
+        <div class="submit-info">
+            <p id="unansNote" class="unans-note"></p>
+        </div>
+        <button type="submit" class="submit-btn">Submit quiz 📤</button>
+    </div>
+    <div id="saveStatus" class="save-status"></div>
 
     </form>
 </main>
 
-<footer class="foot">University of Costa Rica · Vocabulary Quiz · Professor: Roberto Mesén Hidalgo · Designed by: Rosney</footer>
+<footer class="foot">University of Costa Rica · Vocabulary Quiz · Prof. Roberto Mesén Hidalgo · Designed by Rosney</footer>
+
+</div><!-- end quizBody -->
 
 <script src="script.js"></script>
 </body>
