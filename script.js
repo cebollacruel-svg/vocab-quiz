@@ -10,7 +10,7 @@
    ===================================================================== */
 
 // Paste your Apps Script deployment URL here (ends in /exec)
-const APPS_SCRIPT_URL = "PASTE_YOUR_APPS_SCRIPT_URL_HERE";
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwFz2G1LF2yQLcgsfVsjzfvhzBvU0ECEdTlkLkGqSjAcydjZOGZd-Keu0L-DFmzcvzF/exec";
 
 const TOTAL = 20;
 
