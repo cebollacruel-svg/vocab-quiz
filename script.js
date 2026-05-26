@@ -1,16 +1,9 @@
 /* =====================================================================
    VOCABULARY QUIZ v3 — University of Costa Rica
    Prof. Roberto Mesén Hidalgo · Designed by Rosney
-   - No emojis in UI
-   - Scroll to Section A after start
-   - Gold blinking timer (CSS-driven)
-   - Options lift on hover (CSS-driven)
-   - Leave = PERMANENT block, no return
-   - Reload after submit = blocked via sessionStorage
    ===================================================================== */
 
-// Paste your Apps Script deployment URL here (ends in /exec)
-const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwFz2G1LF2yQLcgsfVsjzfvhzBvU0ECEdTlkLkGqSjAcydjZOGZd-Keu0L-DFmzcvzF/exec";
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby2qTBUwWN5_zsBrGhslaw4asYc0EiY-TohO-DfRrU7aBFg42Zu0xmOkpT0yfmV5O6l/exec";
 
 const TOTAL = 20;
 
@@ -99,12 +92,9 @@ if (startBtn) {
         startTimer();
         updateProgress();
 
-        // Scroll to Section A after a short delay
         setTimeout(() => {
             const sectionA = $("#sectionA");
-            if (sectionA) {
-                sectionA.scrollIntoView({ behavior: "smooth", block: "start" });
-            }
+            if (sectionA) sectionA.scrollIntoView({ behavior: "smooth", block: "start" });
         }, 180);
     });
 
@@ -121,7 +111,8 @@ function startTimer() {
         elapsedSec++;
         const m = String(Math.floor(elapsedSec / 60)).padStart(2, "0");
         const s = String(elapsedSec % 60).padStart(2, "0");
-        $("#timer").textContent = `${m}:${s}`;
+        const t = $("#timer");
+        if (t) t.textContent = `${m}:${s}`;
     }, 1000);
 }
 function stopTimer() { clearInterval(timerInterval); }
@@ -140,12 +131,10 @@ function updateProgress() {
         const card = $(`.q[data-q="${i}"]`);
         if (card) card.classList.toggle("answered", !!done);
     }
-    const pct = (answered / TOTAL * 100).toFixed(0);
     const fill = $("#progFill");
-    if (fill) fill.style.width = pct + "%";
+    if (fill) fill.style.width = (answered / TOTAL * 100).toFixed(0) + "%";
     const txt = $("#progText");
     if (txt) txt.textContent = `${answered}/${TOTAL}`;
-
     const note = $("#unansNote");
     if (note) {
         const left = TOTAL - answered;
@@ -156,34 +145,30 @@ document.addEventListener("input",  updateProgress);
 document.addEventListener("change", updateProgress);
 
 /* ------------------------------------------------------------------ */
-/*  4. ANTI-CHEAT — leave = PERMANENT block (no return button)         */
+/*  4. ANTI-CHEAT — leave = PERMANENT block                            */
 /* ------------------------------------------------------------------ */
 function permanentBlock() {
-    if (submitted) return; // don't block after submit
+    if (submitted || !quizStarted) return;
     leaveCount++;
+    quizStarted = false;
     stopTimer();
-    quizStarted = false; // disable future triggers
 
-    // Store as flagged but not submitted
-    sessionStorage.setItem("quizFlagged", "yes");
-
-    // Send flag to Sheets immediately
+    // Send flag record to Sheets
     sendToSheets({
         type:        "quiz",
-        nombre:      studentName || "(unnamed)",
-        unidad:      "Units 4 & 6",
-        puntaje:     "FLAGGED — left the page",
+        nombre:      studentName || "(no name)",
+        puntaje:     "FLAGGED",
         porcentaje:  "0%",
         correctas:   "—",
         incorrectas: "—",
-        detalle:     `[FLAGGED at ${formatTime(elapsedSec)} — student left the quiz page]`
-    }, /*silent=*/true);
+        detalle:     `[FLAGGED: left page at ${formatTime(elapsedSec)}]`
+    }, true);
 
-    // Show permanent block overlay
+    // Show block overlay
     const overlay = $("#blockedOverlay");
     if (overlay) overlay.hidden = false;
 
-    // Block F5, Ctrl+R, Cmd+R — prevent any reload while blocked
+    // Block F5 / Ctrl+R / Cmd+R
     document.addEventListener("keydown", e => {
         if (
             e.key === "F5" ||
@@ -195,7 +180,7 @@ function permanentBlock() {
         }
     }, true);
 
-    // Override beforeunload so the browser reload/close prompt cannot proceed
+    // Override beforeunload to block close/reload dialog
     window.onbeforeunload = e => {
         e.preventDefault();
         e.returnValue = "";
@@ -219,18 +204,13 @@ window.addEventListener("blur", () => {
 });
 
 /* ------------------------------------------------------------------ */
-/*  5. BEFOREUNLOAD — warn on close / navigate away                    */
+/*  5. BEFOREUNLOAD while quiz is active                               */
 /* ------------------------------------------------------------------ */
 window.addEventListener("beforeunload", e => {
-    if (quizStarted && !submitted) {
+    if ((quizStarted && !submitted) || submitted) {
         e.preventDefault();
-        e.returnValue = "Your quiz is not submitted yet. Leaving will flag your session.";
-        return e.returnValue;
-    }
-    if (submitted) {
-        e.preventDefault();
-        e.returnValue = "The quiz has been submitted. Reloading is not allowed.";
-        return e.returnValue;
+        e.returnValue = "";
+        return "";
     }
 });
 
@@ -247,9 +227,9 @@ if (quizForm) {
         submitted = true;
 
         let score = 0;
-        const correctList  = [];
-        const wrongList    = [];
-        const detailList   = [];
+        const correctList = [];
+        const wrongList   = [];
+        const detailList  = [];
 
         for (let i = 1; i <= TOTAL; i++) {
             const key = "q" + i;
@@ -273,17 +253,16 @@ if (quizForm) {
                 detailList.push(`Q${i}: ${studentAns} (correct)`);
             } else {
                 wrongList.push(`Q${i}`);
-                detailList.push(`Q${i}: "${studentAns}" wrong, correct=${CORRECT_LABEL[key]}`);
+                detailList.push(`Q${i}: "${studentAns}" wrong -> ${CORRECT_LABEL[key]}`);
             }
         }
 
         const pct    = Math.round(score / TOTAL * 100);
-        const detail = `[time:${formatTime(elapsedSec)}] [leaves:${leaveCount}] ` + detailList.join(" | ");
+        const detail = `[time:${formatTime(elapsedSec)}][leaves:${leaveCount}] ` + detailList.join(" | ");
 
         sendToSheets({
             type:        "quiz",
             nombre:      studentName,
-            unidad:      "Units 4 & 6",
             puntaje:     `${score}/${TOTAL}`,
             porcentaje:  `${pct}%`,
             correctas:   correctList.join(", ") || "none",
@@ -310,19 +289,10 @@ function lockQuiz() {
 /* ------------------------------------------------------------------ */
 function sendToSheets(data, silent = false) {
     const el = silent ? null : $("#saveStatus");
-
     if (el) {
         el.className     = "save-status saving";
         el.textContent   = "Sending your quiz to the professor...";
         el.style.display = "block";
-    }
-
-    if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL.includes("PASTE_YOUR")) {
-        if (el) {
-            el.className   = "save-status error";
-            el.textContent = "Configuration error — contact your professor.";
-        }
-        return;
     }
 
     fetch(APPS_SCRIPT_URL, {
