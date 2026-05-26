@@ -183,6 +183,25 @@ function permanentBlock() {
     const overlay = $("#blockedOverlay");
     if (overlay) overlay.hidden = false;
 
+    // Block F5, Ctrl+R, Cmd+R — prevent any reload while blocked
+    document.addEventListener("keydown", e => {
+        if (
+            e.key === "F5" ||
+            (e.ctrlKey && (e.key === "r" || e.key === "R")) ||
+            (e.metaKey && (e.key === "r" || e.key === "R"))
+        ) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+        }
+    }, true);
+
+    // Override beforeunload so the browser reload/close prompt cannot proceed
+    window.onbeforeunload = e => {
+        e.preventDefault();
+        e.returnValue = "";
+        return "";
+    };
+
     // Disable all inputs
     $$("input").forEach(el => el.disabled = true);
     const btn = $(".submit-btn");
