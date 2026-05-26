@@ -11,14 +11,14 @@
 </head>
 <body>
 
-<!-- ======== ANTI-CHEAT OVERLAY ======== -->
-<div id="blurOverlay" class="blur-overlay" hidden>
-    <div class="blur-card">
-        <div class="warning-icon">⚠️</div>
-        <h2>Return to the quiz!</h2>
-        <p>You left this page. <strong>This incident has been recorded.</strong><br>
-        Click the button below to continue. Do not leave again.</p>
-        <button id="returnBtn" class="return-btn">Return to quiz →</button>
+<!-- ======== BLOCKED OVERLAY (permanent after leaving) ======== -->
+<div id="blockedOverlay" class="blocked-overlay" hidden>
+    <div class="blocked-card">
+        <div class="blocked-icon">X</div>
+        <h2>Access Denied</h2>
+        <p>You left the quiz page. <strong>Your session has been terminated and flagged.</strong><br><br>
+        You cannot continue this quiz. Contact your professor.</p>
+        <p class="blocked-note">This incident has been recorded.</p>
     </div>
 </div>
 
@@ -29,22 +29,22 @@
         <h1 class="gate-title">Vocabulary Quiz</h1>
         <p class="gate-subtitle">Units 4 &amp; 6 — <em>Ancient Wisdom</em> &amp; <em>Together Alone</em></p>
         <div class="gate-meta">
-            <span>👨‍🏫 Prof. Roberto Mesén Hidalgo</span>
-            <span>📊 20 points</span>
-            <span>⏱ One lesson</span>
+            <span>Prof. Roberto Mesén Hidalgo</span>
+            <span>20 points</span>
+            <span>One lesson</span>
         </div>
         <div class="gate-rules">
             <p><strong>Before you begin, read carefully:</strong></p>
             <ul>
-                <li>🔒 Once you start, <strong>do not switch tabs or leave</strong> — your session will be flagged.</li>
-                <li>✍️ Some questions require you to <strong>type the exact word</strong> — spelling matters.</li>
-                <li>🚫 The page <strong>cannot be reloaded</strong> after submission.</li>
-                <li>📤 Results are sent directly to your professor.</li>
+                <li>Once you start, <strong>do not switch tabs or leave</strong> — your session will be permanently blocked.</li>
+                <li>Some questions require you to <strong>type the exact word</strong> — spelling matters.</li>
+                <li>The page <strong>cannot be reloaded</strong> after submission.</li>
+                <li>Results are sent directly to your professor.</li>
             </ul>
         </div>
         <label class="gate-label" for="studentName">Your full name *</label>
-        <input type="text" id="studentName" class="gate-input" placeholder="e.g. María Fernández Vargas" autocomplete="off">
-        <button id="startBtn" class="start-btn">I understand — Start quiz →</button>
+        <input type="text" id="studentName" class="gate-input" placeholder="e.g. Maria Fernandez Vargas" autocomplete="off">
+        <button id="startBtn" class="start-btn">I understand — Start quiz</button>
         <p class="gate-note">By clicking Start you agree not to use dictionaries, translators or AI tools.</p>
     </div>
 </section>
@@ -54,7 +54,7 @@
 
 <header class="topbar">
     <div class="topbar-left">
-        <span class="logo">📘 Vocabulary Quiz</span>
+        <span class="logo">Vocabulary Quiz</span>
     </div>
     <div class="topbar-right">
         <div class="timer-wrap">
@@ -68,21 +68,16 @@
     </div>
 </header>
 
-<!-- warning strip -->
-<div id="warnStrip" class="warn-strip" hidden>
-    ⚠️ Warning: You left the quiz tab. This has been noted. <strong id="warnCount"></strong>
-</div>
-
 <main class="sheet">
 
     <form id="quizForm" autocomplete="off">
 
     <!-- ===== SECTION A — TYPE THE WORD ===== -->
-    <div class="sec-header">
+    <div class="sec-header" id="sectionA">
         <span class="sec-letter">A</span>
         <div>
             <h2>Fill in the blank</h2>
-            <p>Type the exact vocabulary word. Spelling counts. No hints this time.</p>
+            <p>Type the exact vocabulary word. Spelling counts. No hints.</p>
         </div>
     </div>
 
@@ -146,7 +141,7 @@
 
     </div>
 
-    <!-- ===== SECTION B — CHOOSE THE CORRECT DEFINITION ===== -->
+    <!-- ===== SECTION B ===== -->
     <div class="sec-header">
         <span class="sec-letter">B</span>
         <div>
@@ -159,7 +154,7 @@
         <div class="q-num-mc">09</div>
         <div class="q-body-mc">
             <p class="stem-mc">The business deal was vital for the company's survival.</p>
-            <p class="stem-mc-sub">In this context, <strong>vital</strong> means…</p>
+            <p class="stem-mc-sub">In this context, <strong>vital</strong> means...</p>
             <div class="opts">
                 <label class="opt"><input type="radio" name="q9" value="a"><span>A) related to vitamins and health</span></label>
                 <label class="opt"><input type="radio" name="q9" value="b"><span>B) completely unnecessary</span></label>
@@ -173,7 +168,7 @@
         <div class="q-num-mc">10</div>
         <div class="q-body-mc">
             <p class="stem-mc">He told an amusing anecdote about the day he met Master Sun.</p>
-            <p class="stem-mc-sub">An <strong>anecdote</strong> is…</p>
+            <p class="stem-mc-sub">An <strong>anecdote</strong> is...</p>
             <div class="opts">
                 <label class="opt"><input type="radio" name="q10" value="a"><span>A) a long scientific report</span></label>
                 <label class="opt"><input type="radio" name="q10" value="b"><span>B) a short, entertaining personal story</span></label>
@@ -187,7 +182,7 @@
         <div class="q-num-mc">11</div>
         <div class="q-body-mc">
             <p class="stem-mc">Social media allows people to connect, but it can also degrade the quality of real-world relationships.</p>
-            <p class="stem-mc-sub"><strong>Degrade</strong> means…</p>
+            <p class="stem-mc-sub"><strong>Degrade</strong> means...</p>
             <div class="opts">
                 <label class="opt"><input type="radio" name="q11" value="a"><span>A) to improve significantly</span></label>
                 <label class="opt"><input type="radio" name="q11" value="b"><span>B) to make something worse over time</span></label>
@@ -201,7 +196,7 @@
         <div class="q-num-mc">12</div>
         <div class="q-body-mc">
             <p class="stem-mc">She values her solitude and spends Sunday mornings alone, reading.</p>
-            <p class="stem-mc-sub"><strong>Solitude</strong> means…</p>
+            <p class="stem-mc-sub"><strong>Solitude</strong> means...</p>
             <div class="opts">
                 <label class="opt"><input type="radio" name="q12" value="a"><span>A) a feeling of deep sadness</span></label>
                 <label class="opt"><input type="radio" name="q12" value="b"><span>B) being surrounded by many friends</span></label>
@@ -211,12 +206,12 @@
         </div>
     </article>
 
-    <!-- ===== SECTION C — CORRECT THE MISTAKE ===== -->
+    <!-- ===== SECTION C ===== -->
     <div class="sec-header">
         <span class="sec-letter">C</span>
         <div>
             <h2>Correct the mistake</h2>
-            <p>One word in bold is used <strong>incorrectly</strong>. Choose the word that should replace it.</p>
+            <p>One word in bold is used incorrectly. Choose the word that should replace it.</p>
         </div>
     </div>
 
@@ -259,7 +254,7 @@
         </div>
     </article>
 
-    <!-- ===== SECTION D — TRUE / FALSE ===== -->
+    <!-- ===== SECTION D ===== -->
     <div class="sec-header">
         <span class="sec-letter">D</span>
         <div>
@@ -273,8 +268,8 @@
         <div class="q-body-mc">
             <p class="stem-mc">A <strong>narcissistic</strong> person is someone who thinks mainly about others and is very generous with their time.</p>
             <div class="opts tf-opts">
-                <label class="opt tf-opt true-opt"><input type="radio" name="q16" value="true"><span>✅ TRUE</span></label>
-                <label class="opt tf-opt false-opt"><input type="radio" name="q16" value="false"><span>❌ FALSE</span></label>
+                <label class="opt tf-opt true-opt"><input type="radio" name="q16" value="true"><span>TRUE</span></label>
+                <label class="opt tf-opt false-opt"><input type="radio" name="q16" value="false"><span>FALSE</span></label>
             </div>
         </div>
     </article>
@@ -284,8 +279,8 @@
         <div class="q-body-mc">
             <p class="stem-mc">If something <strong>transcends</strong> cultural boundaries, it means it only works in one specific culture and cannot be understood by others.</p>
             <div class="opts tf-opts">
-                <label class="opt tf-opt true-opt"><input type="radio" name="q17" value="true"><span>✅ TRUE</span></label>
-                <label class="opt tf-opt false-opt"><input type="radio" name="q17" value="false"><span>❌ FALSE</span></label>
+                <label class="opt tf-opt true-opt"><input type="radio" name="q17" value="true"><span>TRUE</span></label>
+                <label class="opt tf-opt false-opt"><input type="radio" name="q17" value="false"><span>FALSE</span></label>
             </div>
         </div>
     </article>
@@ -295,8 +290,8 @@
         <div class="q-body-mc">
             <p class="stem-mc">A <strong>superficial</strong> online relationship is one that is deep, meaningful, and based on genuine understanding.</p>
             <div class="opts tf-opts">
-                <label class="opt tf-opt true-opt"><input type="radio" name="q18" value="true"><span>✅ TRUE</span></label>
-                <label class="opt tf-opt false-opt"><input type="radio" name="q18" value="false"><span>❌ FALSE</span></label>
+                <label class="opt tf-opt true-opt"><input type="radio" name="q18" value="true"><span>TRUE</span></label>
+                <label class="opt tf-opt false-opt"><input type="radio" name="q18" value="false"><span>FALSE</span></label>
             </div>
         </div>
     </article>
@@ -306,8 +301,8 @@
         <div class="q-body-mc">
             <p class="stem-mc">To <strong>collaborate</strong> with someone means to compete against them aggressively to win a prize or recognition.</p>
             <div class="opts tf-opts">
-                <label class="opt tf-opt true-opt"><input type="radio" name="q19" value="true"><span>✅ TRUE</span></label>
-                <label class="opt tf-opt false-opt"><input type="radio" name="q19" value="false"><span>❌ FALSE</span></label>
+                <label class="opt tf-opt true-opt"><input type="radio" name="q19" value="true"><span>TRUE</span></label>
+                <label class="opt tf-opt false-opt"><input type="radio" name="q19" value="false"><span>FALSE</span></label>
             </div>
         </div>
     </article>
@@ -317,18 +312,16 @@
         <div class="q-body-mc">
             <p class="stem-mc">Being an <strong>advocate</strong> of something means you publicly support and defend it.</p>
             <div class="opts tf-opts">
-                <label class="opt tf-opt true-opt"><input type="radio" name="q20" value="true"><span>✅ TRUE</span></label>
-                <label class="opt tf-opt false-opt"><input type="radio" name="q20" value="false"><span>❌ FALSE</span></label>
+                <label class="opt tf-opt true-opt"><input type="radio" name="q20" value="true"><span>TRUE</span></label>
+                <label class="opt tf-opt false-opt"><input type="radio" name="q20" value="false"><span>FALSE</span></label>
             </div>
         </div>
     </article>
 
     <!-- SUBMIT -->
     <div class="submit-row">
-        <div class="submit-info">
-            <p id="unansNote" class="unans-note"></p>
-        </div>
-        <button type="submit" class="submit-btn">Submit quiz 📤</button>
+        <p id="unansNote" class="unans-note"></p>
+        <button type="submit" class="submit-btn">Submit quiz</button>
     </div>
     <div id="saveStatus" class="save-status"></div>
 
@@ -337,7 +330,7 @@
 
 <footer class="foot">University of Costa Rica · Vocabulary Quiz · Prof. Roberto Mesén Hidalgo · Designed by Rosney</footer>
 
-</div><!-- end quizBody -->
+</div>
 
 <script src="script.js"></script>
 </body>
